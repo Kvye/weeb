@@ -1,5 +1,6 @@
 from jikanpy import Jikan
 import argparse
+import webbrowser
 jikan = Jikan()
 
 class Query:
@@ -39,12 +40,19 @@ class Query:
         # obtain only the information we need from our search result
         return animeresult
 
+    """returns the profile URL of the user we search for"""
+    def user_profile(self, user_name):
+        userprof = jikan.user(username=user_name, request='profile') # search for profile with username provided
+        profileurl = userprof["url"] # take just the url
+        return profileurl 
+        
 if __name__ == '__main__':
     """add arguments for parsing"""
     parser = argparse.ArgumentParser()
-    parser.add_argument("animetitle", help="search for this anime") # add anime title argument
+    parser.add_argument("--animetitle", help="search for this anime") # add anime title argument
     parser.add_argument("--property", help="sort with this property") # add property argument
     parser.add_argument("--desc", default=False, help="sort by descending or not True or False") # add descending argument
+    parser.add_argument("--profilelink", help="search for this users profile") # add profilelink argument
     args = parser.parse_args()
 
     """convert the true/false strings to booleans for the sort method"""
@@ -56,10 +64,13 @@ if __name__ == '__main__':
     elif boolcheck == "FALSE":
         args.desc = False # if user enters false the argument becomes the bool False
     q = Query(args.animetitle) # q is a search for what is entered in the animetitle parameter
-    
+
     """run a sorted search if sort property is specified otherwise run a regular search"""
     if args.property == None: # if a sort property hasnt been specified
         print(q.get_anime()) # print out a search result
     else:
         print(q.sort(args.property, args.desc)) # print out a sorted search result
     
+    """open a web browser with a users profile if we use the profile link param"""
+    if args.profilelink: # if profilelink param is used
+        webbrowser.open(q.user_profile(args.profilelink), new=2) # open web browser with profile we searched for

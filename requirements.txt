@@ -1,3 +1,3 @@
-jikanpy
-pytest
-argparse
+jikanpy==3.4.2
+pytest==5.3.5
+argparse==1.4.0

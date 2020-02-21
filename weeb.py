@@ -4,15 +4,17 @@ import webbrowser
 jikan = Jikan()
 
 class Query:
-    """Searches for the anime being queried"""
+    
     def __init__(self, name):
+        """Searches for the anime being queried"""
         anime = jikan.search('anime', name) # searches for anime with the name provided
         self.searchresults = anime.get("results") # get the results only
         self.sortedlist = [] # empty list to be used for sorting
         self.specify = "null" # string to be used for our final specified result
 
-    """Sorts and returns our anime search results based on a property and in descending order or not"""
     def sort(self, sort_by = "score", descending = False):
+        """Sorts and returns our anime search results based on a property and in descending order or not"""
+
         for x in self.searchresults: # go through all the results
             self.sortedlist.append(x[sort_by]) # append to a list every instance of the property we are using
         self.sortedlist.sort(reverse=descending) # sort that list to sort our results
@@ -28,8 +30,9 @@ class Query:
                 # obtain only the information we need from our sorted search result
                 return animeresult                
 
-    """Returns our top/first anime result or one we specify with an index"""
+    
     def get_anime(self, which = 0):
+        """Returns our top/first anime result or one we specify with an index"""
         self.specify = self.searchresults[which] # obtain the search result index
         anime_name = "name: " + self.specify["title"]
         anime_image = " image: " + self.specify["image_url"]
@@ -40,8 +43,9 @@ class Query:
         # obtain only the information we need from our search result
         return animeresult
 
-    """returns the profile URL of the user we search for"""
+    
     def user_profile(self, user_name):
+        """returns the profile URL of the user we search for"""
         userprof = jikan.user(username=user_name, request='profile') # search for profile with username provided
         profileurl = userprof["url"] # take just the url
         return profileurl 
@@ -49,7 +53,7 @@ class Query:
 if __name__ == '__main__':
     """add arguments for parsing"""
     parser = argparse.ArgumentParser()
-    parser.add_argument("--animetitle", help="search for this anime") # add anime title argument
+    parser.add_argument("animetitle", help="search for this anime") # add anime title argument
     parser.add_argument("--property", help="sort with this property") # add property argument
     parser.add_argument("--desc", default=False, help="sort by descending or not True or False") # add descending argument
     parser.add_argument("--profilelink", help="search for this users profile") # add profilelink argument

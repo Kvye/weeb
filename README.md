@@ -15,14 +15,14 @@ Example usage
 Make sure you have the prerequisites installed have the repository on your machine.
 
 The program takes in the following commandline arguments
-* `--animetitle` - Enter an anime title to search for
+* `animetitle` - Required: Enter an anime title to search for (first argument)
 * `--property` - Enter a property sort your anime result with
 * `--desc` - Enter True or False for if you want the result sorted in descending order or not
 * `--profilelink` - Enter a username for the program to open a browser with said profile
 
 Example:
 ```
-python weeb.py --animetitle naruto --property score --desc True
+python weeb.py Naruto --property score --desc True
 ```
 
 ```
